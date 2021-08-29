@@ -21,8 +21,9 @@ var ChainId;
   ChainId[ChainId["G\xD6RLI"] = 5] = "G\xD6RLI";
   ChainId[ChainId["KOVAN"] = 42] = "KOVAN";
   ChainId[ChainId["BSC_MAINNET"] = 56] = "BSC_MAINNET";
-  ChainId[ChainId["BSC_TESTNET"] = 97] = "BSC_TESTNET"; // PANCAKE = 56,
-  // UNISWAP = 1
+  ChainId[ChainId["BSC_TESTNET"] = 97] = "BSC_TESTNET";
+  ChainId[ChainId["PANCAKE"] = 56] = "PANCAKE";
+  ChainId[ChainId["UNISWAP"] = 1] = "UNISWAP";
 })(ChainId || (ChainId = {}));
 
 var TradeType;
@@ -41,7 +42,7 @@ var Rounding;
 })(Rounding || (Rounding = {}));
 
 var FACTORY_ADDRESS = (_FACTORY_ADDRESS = {}, _FACTORY_ADDRESS[ChainId.MAINNET] = "0x26023843814cFF92B8d75311d64D1C032b8b29f2", _FACTORY_ADDRESS[ChainId.ROPSTEN] = "0xDfD8bbA37423950bD8050C65E698610C57E55cea", _FACTORY_ADDRESS[ChainId.RINKEBY] = "", _FACTORY_ADDRESS[ChainId.GÖRLI] = "", _FACTORY_ADDRESS[ChainId.KOVAN] = "", _FACTORY_ADDRESS[ChainId.BSC_MAINNET] = "0x86A859773cf6df9C8117F20b0B950adA84e7644d", _FACTORY_ADDRESS[ChainId.BSC_TESTNET] = "0x5F8018088bB686598a77211E611c3b9DEE558e81", _FACTORY_ADDRESS);
-var INIT_CODE_HASH = (_INIT_CODE_HASH = {}, _INIT_CODE_HASH[ChainId.MAINNET] = "0x7fc48862bb659c6079c67f949053514afd141b7fcc1dc2b0a9474d647c51d670", _INIT_CODE_HASH[ChainId.ROPSTEN] = '0x8b4ce8ec78a7c1be0d482d641f59b942070725a4b7782595db30956c6d46e824', _INIT_CODE_HASH[ChainId.RINKEBY] = "", _INIT_CODE_HASH[ChainId.GÖRLI] = "", _INIT_CODE_HASH[ChainId.KOVAN] = "", _INIT_CODE_HASH[ChainId.BSC_MAINNET] = "0x7fc48862bb659c6079c67f949053514afd141b7fcc1dc2b0a9474d647c51d670", _INIT_CODE_HASH[ChainId.BSC_TESTNET] = '0x8b4ce8ec78a7c1be0d482d641f59b942070725a4b7782595db30956c6d46e824', _INIT_CODE_HASH);
+var INIT_CODE_HASH = (_INIT_CODE_HASH = {}, _INIT_CODE_HASH[ChainId.MAINNET] = "0x7fc48862bb659c6079c67f949053514afd141b7fcc1dc2b0a9474d647c51d670", _INIT_CODE_HASH[ChainId.ROPSTEN] = '0x8b4ce8ec78a7c1be0d482d641f59b942070725a4b7782595db30956c6d46e824', _INIT_CODE_HASH[ChainId.RINKEBY] = "", _INIT_CODE_HASH[ChainId.GÖRLI] = "", _INIT_CODE_HASH[ChainId.KOVAN] = "", _INIT_CODE_HASH[ChainId.BSC_MAINNET] = "0x7fc48862bb659c6079c67f949053514afd141b7fcc1dc2b0a9474d647c51d670", _INIT_CODE_HASH[ChainId.BSC_TESTNET] = '0x8b4ce8ec78a7c1be0d482d641f59b942070725a4b7782595db30956c6d46e824', _INIT_CODE_HASH[ChainId.PANCAKE] = '0xd0d4c4cd0848c93cb4fd1f498d7013ee6bfb25783ea21593d5834f5d250ece66', _INIT_CODE_HASH[ChainId.UNISWAP] = '0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f', _INIT_CODE_HASH);
 var MINIMUM_LIQUIDITY = /*#__PURE__*/JSBI.BigInt(1000); // exports for internal consumption
 
 var ZERO = /*#__PURE__*/JSBI.BigInt(0);
@@ -99,7 +100,8 @@ function _extends() {
 function _inheritsLoose(subClass, superClass) {
   subClass.prototype = Object.create(superClass.prototype);
   subClass.prototype.constructor = subClass;
-  subClass.__proto__ = superClass;
+
+  _setPrototypeOf(subClass, superClass);
 }
 
 function _getPrototypeOf(o) {
@@ -124,7 +126,7 @@ function _isNativeReflectConstruct() {
   if (typeof Proxy === "function") return true;
 
   try {
-    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
     return true;
   } catch (e) {
     return false;
@@ -212,28 +214,24 @@ function _arrayLikeToArray(arr, len) {
 }
 
 function _createForOfIteratorHelperLoose(o, allowArrayLike) {
-  var it;
+  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
+  if (it) return (it = it.call(o)).next.bind(it);
 
-  if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
-    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
-      if (it) o = it;
-      var i = 0;
-      return function () {
-        if (i >= o.length) return {
-          done: true
-        };
-        return {
-          done: false,
-          value: o[i++]
-        };
+  if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+    if (it) o = it;
+    var i = 0;
+    return function () {
+      if (i >= o.length) return {
+        done: true
       };
-    }
-
-    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+      return {
+        done: false,
+        value: o[i++]
+      };
+    };
   }
 
-  it = o[Symbol.iterator]();
-  return it.next.bind(it);
+  throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
 // see https://stackoverflow.com/a/41102306
