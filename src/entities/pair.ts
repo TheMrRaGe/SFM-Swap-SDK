@@ -15,7 +15,8 @@ import {
   INIT_CODE_HASH,
   MINIMUM_LIQUIDITY,
   ONE,
-  ZERO
+  ZERO,
+  fetchInitCodeHash
 } from '../constants'
 import {parseBigintIsh, sqrt} from '../utils'
 import {InsufficientInputAmountError, InsufficientReservesError} from '../errors'
@@ -39,7 +40,7 @@ export class Pair {
               // @ts-ignore
             FACTORY_ADDRESS[chainId || tokenA.chainId],
             keccak256(['bytes'], [pack(['address', 'address'], [tokens[0].address, tokens[1].address])]),
-            INIT_CODE_HASH[chainId || tokenA.chainId]
+            fetchInitCodeHash(chainId || tokenA.chainId)
           )
         }
       }
