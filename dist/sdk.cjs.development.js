@@ -25,8 +25,9 @@ var _FACTORY_ADDRESS, _INIT_CODE_HASH, _SOLIDITY_TYPE_MAXIMA;
   ChainId[ChainId["G\xD6RLI"] = 5] = "G\xD6RLI";
   ChainId[ChainId["KOVAN"] = 42] = "KOVAN";
   ChainId[ChainId["BSC_MAINNET"] = 56] = "BSC_MAINNET";
-  ChainId[ChainId["BSC_TESTNET"] = 97] = "BSC_TESTNET"; // PANCAKE = 56,
-  // UNISWAP = 1
+  ChainId[ChainId["BSC_TESTNET"] = 97] = "BSC_TESTNET";
+  ChainId[ChainId["PANCAKE"] = 57] = "PANCAKE";
+  ChainId[ChainId["UNISWAP"] = 2] = "UNISWAP";
 })(exports.ChainId || (exports.ChainId = {}));
 
 (function (TradeType) {
@@ -40,8 +41,17 @@ var _FACTORY_ADDRESS, _INIT_CODE_HASH, _SOLIDITY_TYPE_MAXIMA;
   Rounding[Rounding["ROUND_UP"] = 2] = "ROUND_UP";
 })(exports.Rounding || (exports.Rounding = {}));
 
-var FACTORY_ADDRESS = (_FACTORY_ADDRESS = {}, _FACTORY_ADDRESS[exports.ChainId.MAINNET] = "0x26023843814cFF92B8d75311d64D1C032b8b29f2", _FACTORY_ADDRESS[exports.ChainId.ROPSTEN] = "0xDfD8bbA37423950bD8050C65E698610C57E55cea", _FACTORY_ADDRESS[exports.ChainId.RINKEBY] = "", _FACTORY_ADDRESS[exports.ChainId.GÖRLI] = "", _FACTORY_ADDRESS[exports.ChainId.KOVAN] = "", _FACTORY_ADDRESS[exports.ChainId.BSC_MAINNET] = "0x86A859773cf6df9C8117F20b0B950adA84e7644d", _FACTORY_ADDRESS[exports.ChainId.BSC_TESTNET] = "0x5F8018088bB686598a77211E611c3b9DEE558e81", _FACTORY_ADDRESS);
-var INIT_CODE_HASH = (_INIT_CODE_HASH = {}, _INIT_CODE_HASH[exports.ChainId.MAINNET] = "0x7fc48862bb659c6079c67f949053514afd141b7fcc1dc2b0a9474d647c51d670", _INIT_CODE_HASH[exports.ChainId.ROPSTEN] = '0x8b4ce8ec78a7c1be0d482d641f59b942070725a4b7782595db30956c6d46e824', _INIT_CODE_HASH[exports.ChainId.RINKEBY] = "", _INIT_CODE_HASH[exports.ChainId.GÖRLI] = "", _INIT_CODE_HASH[exports.ChainId.KOVAN] = "", _INIT_CODE_HASH[exports.ChainId.BSC_MAINNET] = "0x7fc48862bb659c6079c67f949053514afd141b7fcc1dc2b0a9474d647c51d670", _INIT_CODE_HASH[exports.ChainId.BSC_TESTNET] = '0x8b4ce8ec78a7c1be0d482d641f59b942070725a4b7782595db30956c6d46e824', _INIT_CODE_HASH);
+var FACTORY_ADDRESS = (_FACTORY_ADDRESS = {}, _FACTORY_ADDRESS[exports.ChainId.MAINNET] = "0x26023843814cFF92B8d75311d64D1C032b8b29f2", _FACTORY_ADDRESS[exports.ChainId.ROPSTEN] = "0xDfD8bbA37423950bD8050C65E698610C57E55cea", _FACTORY_ADDRESS[exports.ChainId.RINKEBY] = "", _FACTORY_ADDRESS[exports.ChainId.GÖRLI] = "", _FACTORY_ADDRESS[exports.ChainId.KOVAN] = "", _FACTORY_ADDRESS[exports.ChainId.BSC_MAINNET] = "0x86A859773cf6df9C8117F20b0B950adA84e7644d", _FACTORY_ADDRESS[exports.ChainId.BSC_TESTNET] = "0x5F8018088bB686598a77211E611c3b9DEE558e81", _FACTORY_ADDRESS[exports.ChainId.PANCAKE] = "", _FACTORY_ADDRESS[exports.ChainId.UNISWAP] = "", _FACTORY_ADDRESS);
+var INIT_CODE_HASH = (_INIT_CODE_HASH = {}, _INIT_CODE_HASH[exports.ChainId.MAINNET] = "0x7fc48862bb659c6079c67f949053514afd141b7fcc1dc2b0a9474d647c51d670", _INIT_CODE_HASH[exports.ChainId.ROPSTEN] = '0x8b4ce8ec78a7c1be0d482d641f59b942070725a4b7782595db30956c6d46e824', _INIT_CODE_HASH[exports.ChainId.RINKEBY] = "", _INIT_CODE_HASH[exports.ChainId.GÖRLI] = "", _INIT_CODE_HASH[exports.ChainId.KOVAN] = "", _INIT_CODE_HASH[exports.ChainId.BSC_MAINNET] = "0x7fc48862bb659c6079c67f949053514afd141b7fcc1dc2b0a9474d647c51d670", _INIT_CODE_HASH[exports.ChainId.BSC_TESTNET] = '0x8b4ce8ec78a7c1be0d482d641f59b942070725a4b7782595db30956c6d46e824', _INIT_CODE_HASH[exports.ChainId.PANCAKE] = '0xd0d4c4cd0848c93cb4fd1f498d7013ee6bfb25783ea21593d5834f5d250ece66', _INIT_CODE_HASH[exports.ChainId.UNISWAP] = '0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f', _INIT_CODE_HASH);
+var fetchInitCodeHash = function fetchInitCodeHash(id) {
+  if (id === exports.ChainId.PANCAKE) {
+    return INIT_CODE_HASH[57];
+  } else if (id === exports.ChainId.UNISWAP) {
+    return INIT_CODE_HASH[2];
+  } else {
+    return INIT_CODE_HASH[id];
+  }
+};
 var MINIMUM_LIQUIDITY = /*#__PURE__*/JSBI.BigInt(1000); // exports for internal consumption
 
 var ZERO = /*#__PURE__*/JSBI.BigInt(0);
@@ -777,7 +787,7 @@ var Pair = /*#__PURE__*/function () {
       var _PAIR_ADDRESS_CACHE2, _extends2, _extends3;
 
       PAIR_ADDRESS_CACHE = _extends({}, PAIR_ADDRESS_CACHE, (_extends3 = {}, _extends3[tokens[0].address] = _extends({}, (_PAIR_ADDRESS_CACHE2 = PAIR_ADDRESS_CACHE) === null || _PAIR_ADDRESS_CACHE2 === void 0 ? void 0 : _PAIR_ADDRESS_CACHE2[tokens[0].address], (_extends2 = {}, _extends2[tokens[1].address] = address.getCreate2Address( // @ts-ignore
-      FACTORY_ADDRESS[chainId || tokenA.chainId], solidity.keccak256(['bytes'], [solidity.pack(['address', 'address'], [tokens[0].address, tokens[1].address])]), INIT_CODE_HASH[chainId || tokenA.chainId]), _extends2)), _extends3));
+      FACTORY_ADDRESS[chainId || tokenA.chainId], solidity.keccak256(['bytes'], [solidity.pack(['address', 'address'], [tokens[0].address, tokens[1].address])]), fetchInitCodeHash(chainId || tokenA.chainId)), _extends2)), _extends3));
     }
 
     return PAIR_ADDRESS_CACHE[tokens[0].address][tokens[1].address];

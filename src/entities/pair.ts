@@ -12,7 +12,6 @@ import {
   ChainId,
   FACTORY_ADDRESS,
   FIVE,
-  INIT_CODE_HASH,
   MINIMUM_LIQUIDITY,
   ONE,
   ZERO,

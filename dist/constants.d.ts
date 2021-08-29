@@ -7,7 +7,9 @@ export declare enum ChainId {
     GÖRLI = 5,
     KOVAN = 42,
     BSC_MAINNET = 56,
-    BSC_TESTNET = 97
+    BSC_TESTNET = 97,
+    PANCAKE = 57,
+    UNISWAP = 2
 }
 export declare enum TradeType {
     EXACT_INPUT = 0,
@@ -23,6 +25,7 @@ declare type ChainAddress = {
 };
 export declare const FACTORY_ADDRESS: ChainAddress;
 export declare const INIT_CODE_HASH: ChainAddress;
+export declare const fetchInitCodeHash: (id: ChainId) => string;
 export declare const MINIMUM_LIQUIDITY: JSBI;
 export declare const ZERO: JSBI;
 export declare const ONE: JSBI;
